@@ -229,7 +229,7 @@ static void main_board(void) {
 // End "MAIN_BOARD"
 #else
 static void main_board(void){}
-static void luna_jump(bool newJump){}
+void luna_jump(bool newJump){}
 
 #define MARQUEE_FRAME_DURATION 200 // how long each frame lasts in ms
 #define LOGO_BYTES 128
@@ -285,6 +285,6 @@ void oled_task_user(void) {
 
 // End "OLED_DRIVER_ENABLE"
 #else
-static void luna_jump(bool newJump){}
+void luna_jump(bool newJump){}
 // End "OLED_DRIVER_ENABLE" false
 #endif
