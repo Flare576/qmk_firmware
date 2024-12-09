@@ -178,10 +178,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
+#ifdef MASTER_LEFT
         if (clockwise) {
-            tap_code(KC_VOLD);
-        } else {
+#else
+        if (!clockwise) {
+#endif
             tap_code(KC_VOLU);
+        } else {
+            tap_code(KC_VOLD);
         }
     } else if (index == 1) {
         if (clockwise) {

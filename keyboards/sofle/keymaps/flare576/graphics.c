@@ -20,7 +20,7 @@ int current_wpm = -1; // Enable screen-on at startup
 bool isJumping = false;
 bool showedJump = true;
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
 #ifdef MAIN_BOARD
 static void render_logos(void){}
@@ -259,6 +259,9 @@ static void render_logos(void) {
     if(timer_elapsed32(marquee_timer) > MARQUEE_FRAME_DURATION) {
         marquee_timer = timer_read32();
         marquee_phase();
+        char grr[3];
+        itoa(current_wpm, grr, 10);
+        oled_write_ln(grr, false);
     }
 }
 
@@ -269,7 +272,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     return OLED_ROTATION_270;
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     // Prevent blank screen on startup
     if (current_wpm == -1) {
         set_current_wpm(10);
@@ -279,8 +282,11 @@ void oled_task_user(void) {
         // can't gate main_board on wpm; won't get mode changes that don't trigger wpm
         main_board();
     } else if (current_wpm > 0) {
+        // Slave isn't getting WPM updates now... Disable OLED
+        set_current_wpm(0);
         render_logos();
     }
+    return false;
 }
 
 // End "OLED_DRIVER_ENABLE"

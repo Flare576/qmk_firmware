@@ -15,7 +15,7 @@
  */
 #pragma once
 #define MAIN_BOARD
-#define MASTER_RIGHT
+#define MASTER_LEFT
 #define ENCODER_DIRECTION_FLIP
 #define OLED_TIMEOUT 10000
 
